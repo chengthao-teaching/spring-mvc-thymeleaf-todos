@@ -1,0 +1,31 @@
+
+<html 
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <title>Update Todos</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+
+  <body>
+    <div class="container">
+      <h3>Update</h3>
+      <form th:object="${form}">
+
+        <div th:each="todo, iter: *{todos}">
+          <label>Todo</label>
+          <input type="hidden"   th:field="*{todos[__${iter.index}__].id}" />
+          <input type="text"     th:field="*{todos[__${iter.index}__].desc}" class="form-control" />
+          <label>Done</label>
+          <input type="checkbox" th:field="*{todos[__${iter.index}__].done}" th:checked="${todo.done}"/>
+        </div>
+        
+        <input type="submit" value="upate" class="btn btn-danger"
+               formmethod="post" formaction="/todos/update-multiple"/>
+      </form>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:html="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Todos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h3>Todos</h3>
+      <form method="post" th:action="@{/todos/add}" >
+        <input class="form-control"  type="text" name="desc" width="100%" />
+        <input  type="submit" name="add" value="Add" />
+      </form>
+
+      <form>
+        <table class="table">
+          <tr>
+            <th scope="col">Select</th>
+            <th scope="col">Description</th>
+            <!--th>done</th -->
+            <th scope="col">Actions</th>
+          </tr>
+          <tr th:each="todo: ${todos}"
+              th:classappend ="${todo.done} ? 'table-success'">
+            <td><input type="checkbox" name="ids" th:value="${todo.id}"></td>
+            <td th:text="${todo.desc}" />
+            <!-- td th:text="${todo.done}" / -->
+            <td>
+              <a th:href="@{/todos/{id}/delete(id = ${todo.id})}">delete</a>|
+              <a th:href="@{/todos/{id}/done(id = ${todo.id})}">done</a>|
+              <a th:href="@{/todos/{id}/update(id = ${todo.id})}">update</a>
+            </td>
+          </tr>
+        </table>
+
+        <input type="submit" name="delete" value="delete"
+               formmethod="post"
+               formaction="/todos/delete-multiple"
+               class="btn btn-secondary"
+               />
+
+        <input type="submit" name="update" value="update"
+               formmethod="post"
+               formaction="/todos/update-multiple-form"
+               class="btn btn-secondary"
+               />
+
+        <input type="submit" name="done" value="done"
+               formmethod="post"
+               formaction="/todos/done-multiple"
+               class="btn btn-secondary"
+               />
+      </form>
+    </div>
+  </body>
+</html>
