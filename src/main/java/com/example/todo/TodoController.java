@@ -20,6 +20,11 @@ public class TodoController {
     @Autowired
     private TodoService service;
 
+    @RequestMapping("/")
+    public String index(){
+        return "redirect:/todos";
+    }
+    
     @PostMapping("/todos/add")
     public String add(@RequestParam String desc, Model model){
         service.add(new Todo(desc, false));
@@ -80,8 +85,7 @@ public class TodoController {
     public String updateMultipleForm(@RequestParam(required = false) List<Integer> ids, Model model){
         //user did not select any todo
         if (ids == null) return "redirect:/todos";
-        
-       
+            
         List<Todo> todos = new ArrayList<>();
         ids.forEach(id->todos.add(service.get(id)));
         model.addAttribute("form", new Todos(todos));
