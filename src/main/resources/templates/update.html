@@ -14,15 +14,15 @@
   <body>
     <div class="container">
       <h3>Update</h3>
-      <form>
-        <input type="hidden" name="id" th:value="${todo.id}"/>
+      <form th:object="${todo}">
+        <input type="hidden" th:field="*{id}"/>
         <label>Description</label>
-        <input type="text" class="form-control" name="desc" th:value="${todo.desc}"/>
-        <input type="checkbox" name="done" th:checked="${todo.done}"/>
+        <input type="text" class="form-control" th:field="*{desc}"/>
+        <input type="checkbox" th:field="*{done}"/>
         <label>Check if todo is done</label><br/>
         
         <input type="submit" value="upate" class="btn btn-danger"
-               formmethod="post" th:formaction="@{/todos/{id}/update(id = ${todo.id})}"/>
+               formmethod="post" th:formaction="@{/todos/{id}/update(id = *{id})}"/>
         <input type="submit" value="cancel" class="btn btn-secondary"
                formmethod="get" th:formaction="@{/todos}" /> 
       </form>
